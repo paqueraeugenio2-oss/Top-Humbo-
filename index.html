@@ -1,1 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>TOP HUAMBO | Painel do Cliente</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #101010;
+    color: white;
+}
+
+header {
+    background: #191919;
+    padding: 22px 15px;
+    text-align: center;
+    border-bottom: 2px solid #d5ad55;
+}
+
+header h1 {
+    margin: 0;
+    color: #e5bf65;
+}
+
+header p {
+    color: #ddd;
+    margin-bottom: 0;
+}
+
+main {
+    max-width: 600px;
+    margin: auto;
+    padding: 18px;
+}
+
+.card {
+    background: #1c1c1c;
+    border: 1px solid #393939;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 18px;
+}
+
+h2 {
+    color: #e5bf65;
+    margin-top: 0;
+}
+
+input, select, textarea, button {
+    width: 100%;
+    padding: 13px;
+    margin: 7px 0;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+input, select, textarea {
+    background: #292929;
+    color: white;
+    border: 1px solid #555;
+}
+
+button {
+    background: #d5ad55;
+    color: #111;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.6;
+}
+
+.secondary {
+    background: #393939;
+    color: white;
+}
+
+.small {
+    color: #ccc;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.service {
+    padding: 10px 0;
+    border-bottom: 1px solid #393939;
+}
+
+.booking {
+    background: #292929;
+    padding: 13px;
+    margin: 10px 0;
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+}
+
+.status {
+    color: #e5bf65;
+    font-weight: bold;
+}
+
+#message {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #aaa;
+    font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>TOP HUAMBO</h1>
+    <p>Beleza ao domicílio</p>
+</header>
+
+<main>
+
+<div id="message" class="hidden"></div>
+
+<!-- SERVIÇOS PÚBLICOS -->
+
+<section class="card">
+    <h2>Os nossos serviços</h2>
+
+    <div class="service">
+        <strong>Manicure</strong>
+        <p>1.500 Kz</p>
+    </div>
+
+    <div class="service">
+        <strong>Pedicure</strong>
+        <p>1.000 Kz</p>
+    </div>
+
+    <div class="service">
+        <strong>Manicure + Pedicure</strong>
+        <p>2.500 Kz</p>
+    </div>
+
+    <p class="small">
+        Deslocação ao domicílio: 400 Kz por visita.
+        Se várias pessoas forem atendidas na mesma visita,
+        a taxa de deslocação é cobrada apenas uma vez.
+    </p>
+</section>
+
+<!-- AUTENTICAÇÃO -->
+
+<section class="card" id="authPanel">
+
+    <h2>Área do cliente</h2>
+
+    <div id="registerBox">
+        <h3>Criar conta</h3>
+
+        <input id="regName"
+               type="text"
+               maxlength="100"
+               placeholder="Nome completo">
+
+        <input id="regPhone"
+               type="tel"
+               maxlength="30"
+               placeholder="Número de telefone">
+
+        <input id="regEmail"
+               type="email"
+               placeholder="Email">
+
+        <input id="regPassword"
+               type="password"
+               minlength="8"
+               placeholder="Palavra-passe (mínimo 8 caracteres)">
+
+        <button id="registerBtn" type="button">
+            Criar conta
+        </button>
+    </div>
+
+    <hr>
+
+    <div id="loginBox">
+        <h3>Já tens uma conta?</h3>
+
+        <input id="loginEmail"
+               type="email"
+               placeholder="Email">
