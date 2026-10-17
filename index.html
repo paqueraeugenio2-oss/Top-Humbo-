@@ -1,6 +1,32 @@
 <!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#b58a3a"><title>TOP HUAMBO — Cliente</title><style>
-:root{--gold:#b58a3a;--dark:#8b6826;--bg:#faf8f3;--line:#e9e2d4}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#25231f;font-family:Arial,sans-serif}header{padding:16px;background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:2}header b{font-size:20px;color:var(--dark)}main{max-width:760px;margin:auto;padding:16px}section,.card{background:white;border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}h1{font-size:28px}h2{font-size:20px}label{display:block;font-size:13px;font-weight:bold;margin:12px 0 5px}input,select,button{font:inherit;width:100%;padding:12px;border:1px solid #ddd3bf;border-radius:10px;background:white}button{background:var(--gold);border:0;color:white;font-weight:bold;margin-top:10px;cursor:pointer}.secondary{background:#f4eddd;color:#4e3c18}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tabs button{font-size:12px;padding:10px 4px}.service{padding:12px;border:1px solid var(--line);border-radius:12px;margin:8px 0}.muted{font-size:13px;color:#6c685f;line-height:1.5}.status{display:inline-block;background:#fff0c2;padding:5px 8px;border-radius:20px;font-size:12px}.accepted{background:#dff4e5}.rejected{background:#fbe1e1}.completed{background:#dcecff}#msg{display:none;background:#fff2cf;border-radius:10px;padding:12px;margin:12px 0;white-space:pre-wrap}.hidden{display:none}.row{display:flex;gap:8px}.row>*{flex:1}@media(max-width:430px){.row{display:block}}</style></head><body><header><b>TOP HUAMBO</b><div class="muted">Beleza ao domicílio · Huambo</div></header><main><div id="msg"></div>
-<section id="auth"><h1>Bem-vindo!</h1><p class="muted">Crie uma conta ou entre para pedir e acompanhar marcações. Confirme o seu e-mail antes de marcar.</p><div class="tabs"><button type="button" onclick="authMode('register')">Criar conta</button><button type="button" class="secondary" onclick="authMode('login')">Iniciar sessão</button><button type="button" class="secondary" onclick="resetPass()">Recuperar senha</button></div><form id="authForm"><label>Nome completo (para registo)</label><input id="name" maxlength="100" placeholder="Nome completo"><label>Telefone</label><input id="phone" maxlength="30" placeholder="9xx xxx xxx"><label>E-mail</label><input id="email" type="email" required placeholder="seu@email.com"><label>Palavra-passe</label><input id="password" type="password" required minlength="6" placeholder="Mínimo 6 caracteres"><button id="authSubmit">Criar conta</button></form><button class="secondary" onclick="sendVerification()">Enviar novamente o e-mail de confirmação</button><button class="secondary hidden" id="logout" onclick="auth.signOut()">Terminar sessão</button></section>
+:root{--gold:#b58a3a;--dark:#8b6826;--bg:#faf8f3;--line:#e9e2d4}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#25231f;font-family:Arial,sans-serif}header{padding:16px;background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:2}header b{font-size:20px;color:var(--dark)}main{max-width:760px;margin:auto;padding:16px}section,.card{background:white;border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}h1{font-size:28px}h2{font-size:20px}label{display:block;font-size:13px;font-weight:bold;margin:12px 0 5px}input,select,button{font:inherit;width:100%;padding:12px;border:1px solid #ddd3bf;border-radius:10px;background:white}button{background:var(--gold);border:0;color:white;font-weight:bold;margin-top:10px;cursor:pointer}.secondary{background:#f4eddd;color:#4e3c18}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tabs button{font-size:12px;padding:10px 4px}.service{padding:12px;border:1px solid var(--line);border-radius:12px;margin:8px 0}.muted{font-size:13px;color:#6c685f;line-height:1.5}.status{display:inline-block;background:#fff0c2;padding:5px 8px;border-radius:20px;font-size:12px}.accepted{background:#dff4e5}.rejected{background:#fbe1e1}.completed{background:#dcecff}#msg{display:none;background:#fff8e8;border:1px solid #ead7a8;border-left:4px solid var(--gold);color:#493817;border-radius:10px;padding:12px;margin:12px 0;white-space:pre-wrap;line-height:1.45}.hidden{display:none}.row{display:flex;gap:8px}.row>*{flex:1}@media(max-width:430px){.row{display:block}}</style></head><body><header><b>TOP HUAMBO</b><div class="muted">Beleza ao domicílio · Huambo</div></header><main><div id="msg"></div>
+<section id="auth">
+<h1>Bem-vindo!</h1>
+<p class="muted">Crie a sua conta ou entre para pedir e acompanhar marcações. A confirmação do e-mail é necessária antes de marcar.</p>
+<div class="tabs">
+<button type="button" id="tabRegister" onclick="authMode('register')">Criar conta</button>
+<button type="button" class="secondary" id="tabLogin" onclick="authMode('login')">Iniciar sessão</button>
+<button type="button" class="secondary" id="tabReset" onclick="authMode('reset')">Recuperar senha</button>
+</div>
+<form id="authForm">
+<div id="registerFields">
+<label for="name">Nome completo</label><input id="name" maxlength="100" placeholder="Nome completo" autocomplete="name">
+<label for="phone">Telefone</label><input id="phone" maxlength="30" placeholder="9xx xxx xxx" autocomplete="tel">
+</div>
+<label for="email">E-mail</label><input id="email" type="email" required placeholder="seu@email.com" autocomplete="email">
+<div id="passwordFields">
+<label for="password">Palavra-passe</label><input id="password" type="password" minlength="6" placeholder="Mínimo 6 caracteres" autocomplete="current-password">
+</div>
+<button id="authSubmit" type="submit">Criar conta</button>
+</form>
+<form id="resetForm" class="hidden">
+<label for="resetEmail">E-mail da sua conta</label>
+<input id="resetEmail" type="email" required placeholder="seu@email.com" autocomplete="email">
+<button type="submit">Enviar link de recuperação</button>
+<button type="button" class="secondary" onclick="authMode('login')">Voltar para iniciar sessão</button>
+</form>
+<button type="button" class="secondary" id="resendVerification" onclick="sendVerification()">Reenviar e-mail de confirmação</button>
+</section>
 <section id="verifyPanel" class="hidden"><h2>Confirme o seu e-mail</h2><p class="muted">A sua conta foi criada, mas ainda não pode usar as marcações. Abra a mensagem enviada pelo Firebase e carregue no link de confirmação. Verifique também Spam/Lixo.</p><button type="button" onclick="sendVerification()">Reenviar e-mail de confirmação</button><button type="button" class="secondary" onclick="checkVerification()">Já confirmei — verificar novamente</button><button type="button" class="secondary" onclick="auth.signOut()">Sair e entrar novamente</button></section>
 <section id="app" class="hidden"><div class="row"><div><h2 id="welcome">A sua conta</h2><p class="muted" id="verifyState"></p></div><button class="secondary" style="max-width:140px" onclick="auth.signOut()">Sair</button></div><h2>Serviços disponíveis</h2><div id="services"></div><h2>Fazer uma marcação</h2><form id="bookingForm"><label>Nome</label><input id="bname" required maxlength="100"><label>Telefone</label><input id="bphone" required maxlength="30"><label>Serviço</label><select id="service" required></select><label>Profissional</label><select id="professional" required><option value="">Carregando profissionais...</option></select><label>Número de pessoas no mesmo local</label><input id="people" type="number" min="1" max="20" value="1" required><label>Bairro e referência/endereço</label><input id="neighborhood" required maxlength="100" placeholder="Ex.: São João, perto da escola..."><label>Data</label><input id="date" type="date" required><label>Hora</label><select id="time" required><option value="">Escolha uma data e um profissional primeiro</option></select><p class="muted">A deslocação é confirmada pelo TOP HUAMBO e não ultrapassa 600 Kz por visita. O pedido começa como pendente.</p><button id="bookSubmit">Enviar pedido</button></form><h2>As minhas marcações</h2><div id="myBookings"></div></section>
 </main><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script><script>const firebaseConfig={apiKey:"AIzaSyCnZGmlTgFhMkDjb6T0p4PI5Cwmmiztcpk",authDomain:"paquera-eugenio.firebaseapp.com",databaseURL:"https://paquera-eugenio-default-rtdb.firebaseio.com",projectId:"paquera-eugenio",storageBucket:"paquera-eugenio.firebasestorage.app",messagingSenderId:"8798461246",appId:"1:8798461246:web:74ba8c4140b1b74ad5206f",measurementId:"G-135GD0B6J5"};
@@ -11,11 +37,72 @@ function money(n){return Number(n||0).toLocaleString('pt-AO')+' Kz'}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function msg(t){const e=document.getElementById('msg');if(e){e.textContent=t;e.style.display='block'}}
 
-let mode='register',currentServices=[];function authMode(m){mode=m;document.getElementById('authSubmit').textContent=m==='register'?'Criar conta':'Iniciar sessão';document.getElementById('name').required=m==='register';document.getElementById('phone').required=m==='register';document.getElementById('name').parentElement.style.display=m==='register'?'block':'block';msg('Modo: '+(m==='register'?'criar conta':'iniciar sessão'));}
-function resetPass(){const email=document.getElementById('email').value.trim();if(!email)return msg('Escreva o seu e-mail primeiro.');auth.sendPasswordResetEmail(email).then(()=>msg('Enviámos instruções para recuperar a palavra-passe.')).catch(e=>msg('Não foi possível enviar: '+e.message))}
-function sendVerification(){const u=auth.currentUser;if(!u)return msg('Entre na sua conta primeiro.');u.sendEmailVerification().then(()=>msg('E-mail de confirmação enviado. Verifique também Spam/Lixo.')).catch(e=>msg('Erro: '+e.message))}
-document.getElementById('authForm').addEventListener('submit',async e=>{e.preventDefault();try{const email=document.getElementById('email').value.trim(),pass=document.getElementById('password').value;if(mode==='register'){const cred=await auth.createUserWithEmailAndPassword(email,pass);await cred.user.updateProfile({displayName:document.getElementById('name').value.trim()});await cred.user.sendEmailVerification();msg('Conta criada. Confirme o e-mail recebido e depois entre novamente.');}else{await auth.signInWithEmailAndPassword(email,pass);}}catch(e){msg('Erro de autenticação: '+e.message)}});
-async function checkVerification(){const u=auth.currentUser;if(!u)return;try{await u.reload();const fresh=auth.currentUser;if(fresh&&fresh.emailVerified){msg('E-mail confirmado! A carregar a sua conta.');location.reload();}else msg('Ainda não aparece como confirmado. Abra o link no e-mail e tente novamente.');}catch(e){msg('Não foi possível verificar agora: '+e.message)}}
+let mode='register',currentServices=[];
+function authMode(m){
+  mode=m;
+  const isRegister=m==='register', isLogin=m==='login', isReset=m==='reset';
+  document.getElementById('authForm').classList.toggle('hidden',isReset);
+  document.getElementById('resetForm').classList.toggle('hidden',!isReset);
+  document.getElementById('registerFields').classList.toggle('hidden',!isRegister);
+  document.getElementById('passwordFields').classList.toggle('hidden',isReset);
+  document.getElementById('name').required=isRegister;
+  document.getElementById('phone').required=isRegister;
+  document.getElementById('password').required=!isReset;
+  document.getElementById('authSubmit').textContent=isRegister?'Criar conta':'Iniciar sessão';
+  document.getElementById('tabRegister').classList.toggle('secondary',!isRegister);
+  document.getElementById('tabLogin').classList.toggle('secondary',!isLogin);
+  document.getElementById('tabReset').classList.toggle('secondary',!isReset);
+  document.getElementById('resendVerification').classList.toggle('hidden',isReset);
+  hideMsg();
+}
+function hideMsg(){const e=document.getElementById('msg');e.style.display='none';e.textContent='';}
+function friendlyAuthError(e){
+  const c=e&&e.code?e.code:'';
+  if(c==='auth/email-already-in-use') return 'Este e-mail já está registado. Se já tem conta, escolha “Iniciar sessão”.';
+  if(c==='auth/invalid-email') return 'O endereço de e-mail não é válido. Verifique e tente novamente.';
+  if(c==='auth/weak-password') return 'A palavra-passe é muito fraca. Use pelo menos 6 caracteres.';
+  if(c==='auth/user-not-found'||c==='auth/invalid-credential'||c==='auth/wrong-password') return 'E-mail ou palavra-passe incorretos. Verifique os dados ou recupere a senha.';
+  if(c==='auth/too-many-requests') return 'Foram feitas muitas tentativas. Aguarde um pouco e tente novamente.';
+  if(c==='auth/network-request-failed') return 'Sem ligação à Internet. Verifique a ligação e tente novamente.';
+  if(c==='auth/requires-recent-login') return 'Por segurança, saia da conta e entre novamente antes de repetir esta ação.';
+  return 'Não foi possível concluir a operação agora. Verifique os dados e tente novamente.';
+}
+function resetPass(){
+  const email=document.getElementById('resetEmail').value.trim();
+  if(!email){msg('Escreva o e-mail associado à sua conta.');return;}
+  auth.sendPasswordResetEmail(email)
+    .then(()=>msg('Se este e-mail estiver registado, receberá instruções para recuperar a palavra-passe. Verifique também Spam/Lixo.'))
+    .catch(e=>msg(friendlyAuthError(e)));
+}
+document.getElementById('resetForm').addEventListener('submit',e=>{e.preventDefault();resetPass();});
+function sendVerification(){
+  const u=auth.currentUser;
+  if(!u){msg('Entre na sua conta primeiro para reenviar a confirmação.');return;}
+  u.sendEmailVerification()
+    .then(()=>msg('E-mail de confirmação enviado. Verifique a caixa de entrada e também Spam/Lixo.'))
+    .catch(e=>msg(friendlyAuthError(e)));
+}
+document.getElementById('authForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const email=document.getElementById('email').value.trim();
+  const pass=document.getElementById('password').value;
+  try{
+    if(mode==='register'){
+      const cred=await auth.createUserWithEmailAndPassword(email,pass);
+      await cred.user.updateProfile({displayName:document.getElementById('name').value.trim()});
+      await db.ref('users/'+cred.user.uid).update({
+        name:document.getElementById('name').value.trim(),
+        phone:document.getElementById('phone').value.trim(),
+        email:email
+      });
+      await cred.user.sendEmailVerification();
+      msg('Conta criada! Enviámos um e-mail de confirmação. Confirme o endereço e depois entre novamente para fazer marcações.');
+    }else{
+      await auth.signInWithEmailAndPassword(email,pass);
+    }
+  }catch(e){msg(friendlyAuthError(e));}
+});
+async function checkVerification(){const u=auth.currentUser;if(!u)return;try{await u.reload();const fresh=auth.currentUser;if(fresh&&fresh.emailVerified){msg('E-mail confirmado! A carregar a sua conta.');location.reload();}else msg('Ainda não aparece como confirmado. Abra o link no e-mail e tente novamente.');}catch(e){msg('Não foi possível verificar agora. Tente novamente dentro de instantes.')}}
 auth.onAuthStateChanged(async u=>{
   document.getElementById('auth').classList.toggle('hidden',!!u);
   document.getElementById('verifyPanel').classList.toggle('hidden',!u||u.emailVerified);
@@ -28,7 +115,7 @@ auth.onAuthStateChanged(async u=>{
   try{const p=(await db.ref('users/'+u.uid).once('value')).val()||{};document.getElementById('bphone').value=p.phone||'';}catch(e){}
   await loadServices();await loadProfessionals();listenBookings(u);
 });
-async function loadServices(){try{const snap=await db.ref('services').once('value');const val=snap.val();currentServices=[];if(val)Object.entries(val).forEach(([id,s])=>{if(s&&s.active!==false&&s.name)currentServices.push({id,name:s.name,price:Number(s.price||s.min||0),active:s.active!==false})});if(!currentServices.length)currentServices=defaults.filter(s=>s.active);document.getElementById('services').innerHTML=currentServices.map(s=>`<div class="service"><b>${esc(s.name)}</b><div>${money(s.price)}</div></div>`).join('');document.getElementById('service').innerHTML='<option value="">Escolha um serviço</option>'+currentServices.map(s=>`<option value="${esc(s.id)}">${esc(s.name)} — ${money(s.price)}</option>`).join('');}catch(e){currentServices=defaults;document.getElementById('services').innerHTML='Não foi possível carregar serviços do Firebase.';msg('Erro ao carregar serviços: '+e.message)}}
+async function loadServices(){try{const snap=await db.ref('services').once('value');const val=snap.val();currentServices=[];if(val)Object.entries(val).forEach(([id,s])=>{if(s&&s.active!==false&&s.name)currentServices.push({id,name:s.name,price:Number(s.price||s.min||0),active:s.active!==false})});if(!currentServices.length)currentServices=defaults.filter(s=>s.active);document.getElementById('services').innerHTML=currentServices.map(s=>`<div class="service"><b>${esc(s.name)}</b><div>${money(s.price)}</div></div>`).join('');document.getElementById('service').innerHTML='<option value="">Escolha um serviço</option>'+currentServices.map(s=>`<option value="${esc(s.id)}">${esc(s.name)} — ${money(s.price)}</option>`).join('');}catch(e){currentServices=defaults;document.getElementById('services').innerHTML='Não foi possível carregar serviços do Firebase.';msg('Não foi possível carregar os serviços agora. Tente novamente mais tarde.')}}
 document.getElementById('date').min=new Date().toISOString().slice(0,10);
 
 let currentProfessionals=[];
@@ -48,7 +135,7 @@ async function loadProfessionals(){
     }
   }catch(err){
     select.innerHTML='<option value="">Não foi possível carregar profissionais</option>';
-    msg('Erro ao carregar profissionais: '+err.message);
+    msg('Não foi possível carregar os profissionais agora. Tente novamente mais tarde.');
   }
 }
 function makeTimeSlots(){
@@ -62,45 +149,20 @@ async function refreshAvailableTimes(){
   const date=document.getElementById('date').value;
   const professionalId=document.getElementById('professional').value;
   const timeSelect=document.getElementById('time');
-  const previouslySelected=timeSelect.value;
-  if(!date || !professionalId){
-    timeSelect.innerHTML='<option value="">Escolha uma data e um profissional primeiro</option>';
-    return;
-  }
-  try{
-    const snap=await db.ref('bookings').once('value');
-    const all=snap.val()||{};
-    const blocked=new Set();
-    Object.values(all).forEach(rows=>{
-      if(!rows || typeof rows!=='object') return;
-      Object.values(rows).forEach(b=>{
-        if(!b || b.date!==date || b.professionalId!==professionalId) return;
-        if(['pending','accepted'].includes(b.status) && b.time) blocked.add(b.time);
-      });
-    });
-    const slots=makeTimeSlots();
-    const available=slots.filter(t=>!blocked.has(t));
-    // Mostrar a lista completa para o cliente perceber quais horários estão ocupados.
-    timeSelect.innerHTML='<option value="">Escolha um horário</option>'+
-      slots.map(t=>blocked.has(t)
-        ? `<option value="" disabled>${t} — Ocupado</option>`
-        : `<option value="${t}">${t} — Disponível</option>`).join('');
-    if(!available.length){
-      timeSelect.innerHTML='<option value="">Sem horários disponíveis nesta data</option>';
-      msg('Este profissional não tem horários livres nesta data. Escolha outra data ou profissional.');
-    } else if(available.includes(previouslySelected)) {
-      timeSelect.value=previouslySelected;
-    }
-  }catch(err){
-    timeSelect.innerHTML='<option value="">Não foi possível carregar horários</option>';
-    msg('Falha ao consultar marcações no Firebase. Verifique as regras de leitura em /bookings. Detalhe: '+err.message);
-  }
+  const previous=timeSelect.value;
+  if(!date || !professionalId){timeSelect.innerHTML='<option value="">Escolha uma data e um profissional primeiro</option>';return;}
+  // Não consultar /bookings aqui: as regras protegem os dados dos outros clientes.
+  const slots=makeTimeSlots();
+  timeSelect.innerHTML='<option value="">Escolha um horário</option>'+slots.map(t=>`<option value="${t}">${t}</option>`).join('');
+  if(slots.includes(previous)) timeSelect.value=previous;
+  hideMsg();
 }
 document.getElementById('professional').addEventListener('change',refreshAvailableTimes);
 document.getElementById('professional').addEventListener('input',refreshAvailableTimes);
 document.getElementById('date').addEventListener('change',refreshAvailableTimes);
 document.getElementById('date').addEventListener('input',refreshAvailableTimes);
 
-document.getElementById('bookingForm').addEventListener('submit',async e=>{e.preventDefault();const u=auth.currentUser;if(!u)return msg('Inicie sessão primeiro.');await u.reload();if(!u.emailVerified)return msg('Confirme o seu e-mail antes de enviar a marcação. Depois, saia e entre novamente.');const s=currentServices.find(x=>x.id===document.getElementById('service').value);if(!s)return msg('Escolha um serviço válido.');if(document.getElementById('date').value<new Date().toISOString().slice(0,10))return msg('Escolha uma data de hoje ou futura.');const n=document.getElementById('neighborhood').value.trim();const professional=currentProfessionals.find(p=>p.id===document.getElementById('professional').value);if(!professional)return msg('Escolha um profissional.');const chosenTime=document.getElementById('time').value;if(!chosenTime)return msg('Escolha um horário disponível.');await refreshAvailableTimes();if(!Array.from(document.getElementById('time').options).some(o=>o.value===chosenTime))return msg('Esse horário acabou de ficar indisponível. Escolha outro horário.');document.getElementById('time').value=chosenTime;const ref=db.ref('bookings/'+u.uid).push();const clientName=document.getElementById('bname').value.trim(),clientPhone=document.getElementById('bphone').value.trim();const booking={name:clientName,phone:clientPhone,service:s.name,professionalId:professional.id,professionalName:professional.name,people:Number(document.getElementById('people').value),date:document.getElementById('date').value,time:chosenTime,neighborhood:n,status:'pending',createdAt:Date.now()};try{await ref.set(booking);msg('Pedido enviado! Consulte “As minhas marcações” para acompanhar o estado.');e.target.reset();document.getElementById('bname').value=u.displayName||clientName;document.getElementById('bphone').value=clientPhone;document.getElementById('time').innerHTML='<option value="">Escolha uma data e um profissional primeiro</option>';}catch(err){msg('Não foi possível guardar a marcação: '+err.message+'\nConfirme se as regras do Realtime Database estão publicadas e se o e-mail está confirmado.')}});
-let bookingListener=null;function listenBookings(u){if(bookingListener)bookingListener.off();bookingListener=db.ref('bookings/'+u.uid);bookingListener.on('value',snap=>{const v=snap.val()||{};const arr=Object.entries(v).map(([id,b])=>({id,...b})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));document.getElementById('myBookings').innerHTML=arr.length?arr.map(b=>`<div class="service"><div class="row"><b>${esc(b.service)}</b><span class="status ${b.status==='accepted'?'accepted':b.status==='rejected'?'rejected':b.status==='completed'?'completed':''}">${b.status==='accepted'?'Aceite':b.status==='rejected'?'Recusada':b.status==='completed'?'Concluída':'Pendente'}</span></div><p class="muted">${esc(b.date)} · ${esc(b.time)} · ${esc(b.neighborhood)}<br>Pessoas: ${Number(b.people)||1}</p></div>`).join(''):'<p class="muted">Ainda não tem marcações.</p>'},e=>msg('Erro ao ler marcações: '+e.message))}
+document.getElementById('bookingForm').addEventListener('submit',async e=>{e.preventDefault();const u=auth.currentUser;if(!u)return msg('Inicie sessão primeiro.');await u.reload();if(!u.emailVerified)return msg('Confirme o seu e-mail antes de enviar a marcação. Depois, saia e entre novamente.');const s=currentServices.find(x=>x.id===document.getElementById('service').value);if(!s)return msg('Escolha um serviço válido.');if(document.getElementById('date').value<new Date().toISOString().slice(0,10))return msg('Escolha uma data de hoje ou futura.');const n=document.getElementById('neighborhood').value.trim();const professional=currentProfessionals.find(p=>p.id===document.getElementById('professional').value);if(!professional)return msg('Escolha um profissional.');const chosenTime=document.getElementById('time').value;if(!chosenTime)return msg('Escolha um horário disponível.');const ref=db.ref('bookings/'+u.uid).push();const clientName=document.getElementById('bname').value.trim(),clientPhone=document.getElementById('bphone').value.trim();const booking={name:clientName,phone:clientPhone,service:s.name,professionalId:professional.id,professionalName:professional.name,people:Number(document.getElementById('people').value),date:document.getElementById('date').value,time:chosenTime,neighborhood:n,status:'pending',createdAt:Date.now()};try{await ref.set(booking);msg('Pedido enviado! O administrador precisa confirmar a disponibilidade do horário. Consulte “As minhas marcações” para acompanhar o estado.');e.target.reset();document.getElementById('bname').value=u.displayName||clientName;document.getElementById('bphone').value=clientPhone;document.getElementById('time').innerHTML='<option value="">Escolha uma data e um profissional primeiro</option>';}catch(err){msg('Não foi possível guardar a marcação. Verifique a ligação à Internet e tente novamente. Se continuar, contacte o TOP HUAMBO.')}});
+let bookingListener=null;function listenBookings(u){if(bookingListener)bookingListener.off();bookingListener=db.ref('bookings/'+u.uid);bookingListener.on('value',snap=>{const v=snap.val()||{};const arr=Object.entries(v).map(([id,b])=>({id,...b})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));document.getElementById('myBookings').innerHTML=arr.length?arr.map(b=>`<div class="service"><div class="row"><b>${esc(b.service)}</b><span class="status ${b.status==='accepted'?'accepted':b.status==='rejected'?'rejected':b.status==='completed'?'completed':''}">${b.status==='accepted'?'Aceite':b.status==='rejected'?'Recusada':b.status==='completed'?'Concluída':'Pendente'}</span></div><p class="muted">${esc(b.date)} · ${esc(b.time)} · ${esc(b.neighborhood)}<br>Pessoas: ${Number(b.people)||1}</p></div>`).join(''):'<p class="muted">Ainda não tem marcações.</p>'},e=>msg('Não foi possível carregar as suas marcações agora. Tente novamente mais tarde.'))}
+authMode('register');
 </script></body></html>
